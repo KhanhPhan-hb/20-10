@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nhập tên - Heart Animation</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Arial', sans-serif;
+      padding: 20px;
+    }
+    
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    
+    h1 {
+      color: #ee5282;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+    
+    .subtitle {
+      color: #666;
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+    
+    .input-group {
+      margin-bottom: 20px;
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 15px;
+      font-size: 18px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      outline: none;
+      transition: all 0.3s;
+    }
+    
+    input[type="text"]:focus {
+      border-color: #ee5282;
+      box-shadow: 0 0 0 3px rgba(238, 82, 130, 0.1);
+    }
+    
+    button {
+      width: 100%;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(135deg, #ee5282 0%, #ff6b9d 100%);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 5px 15px rgba(238, 82, 130, 0.4);
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(238, 82, 130, 0.6);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    .heart-icon {
+      font-size: 50px;
+      margin-bottom: 20px;
+      animation: heartbeat 1.5s infinite;
+    }
+    
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      10%, 30% { transform: scale(0.9); }
+      20%, 40% { transform: scale(1.1); }
+    }
+    
+    @media (max-width: 480px) {
+      .container {
+        padding: 30px 20px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="heart-icon">💖</div>
+    <h1>Chúc mừng 20/10</h1>
+    <p class="subtitle">Nhập tên để nhận lời chúc đặc biệt</p>
+    
+    <form id="nameForm">
+      <div class="input-group">
+        <input 
+          type="text" 
+          id="nameInput" 
+          placeholder="Nhập tên của bạn..." 
+          maxlength="20"
+          required
+          autofocus
+        />
+      </div>
+      <button type="submit">Xem lời chúc 💝</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('nameForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('nameInput').value.trim();
+      
+      if (name) {
+        // Lưu tên vào localStorage
+        localStorage.setItem('userName', name);
+        
+        // Chuyển sang trang animation
+        window.location.href = 'heart.html';
+      }
+    });
+    
+    // Clear tên cũ khi vào trang
+    localStorage.removeItem('userName');
+  </script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Heart Animation | @coding.stella</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./letter.css">
+</head>
+<body>
+
+<svg viewBox="0 0 600 552">
+  <path d="M300,107.77C284.68,55.67,239.76,0,162.31,0,64.83,0,0,82.08,0,171.71c0,.48,0,.95,0,1.43-.52,19.5,0,217.94,299.87,379.69v0l0,0,.05,0,0,0,0,0v0C600,391.08,600.48,192.64,600,173.14c0-.48,0-.95,0-1.43C600,82.08,535.17,0,437.69,0,360.24,0,315.32,55.67,300,107.77" fill="#ee5282"/>
+</svg>
+
+<!-- Bức thư -->
+<div class="letter-container" id="letterContainer">
+  <div class="envelope">
+    <div class="envelope-back"></div>
+    <div class="letter-paper">
+      <div class="letter-content">
+        <div class="greeting">Gửi em yêu,</div>
+        <div class="message" id="typedMessage"></div>
+        <div class="signature">- Từ người yêu em -</div>
+      </div>
+    </div>
+    <div class="envelope-flap"></div>
+  </div>
+</div>
+
+<!-- Text overlay trái tim (ẩn ban đầu) -->
+<div id="heartText" class="heart-text" style="display: none;">
+  <div class="text-content" id="textContent"></div>
+</div>
+
+<!-- Nút quay lại -->
+<div style="position: fixed; bottom: 20px; left: 20px; z-index: 100;">
+  <a href="index.html" style="
+    display: inline-block;
+    padding: 10px 20px;
+    background: rgba(238, 82, 130, 0.9);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  ">← Đổi tên</a>
+</div>
+
+<script src='https://cdn.jsdelivr.net/npm/three@0.136.0/build/three.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/three@0.136.0/examples/js/controls/OrbitControls.js'></script>
+<script src='https://unpkg.co/gsap@3/dist/gsap.min.js'></script>
+
+<script>
+  // Lấy tên từ localStorage
+  let userName = localStorage.getItem('userName') || 'em';
+  
+  // Nội dung thư
+  const message = `Khi em ấn vào link này thì đây là tâm tư anh gửi cho em, anh chúc ${userName} có một ngày 20-10 vui vẻ, thật nhiều sức khỏe và ngày càng xinh đẹp hơn và yêu anh hơn nhé ❤️`;
+  
+  // Hiệu ứng gõ chữ
+  const typedMessageEl = document.getElementById('typedMessage');
+  let charIndex = 0;
+  
+  function typeWriter() {
+    if (charIndex < message.length) {
+      typedMessageEl.innerHTML += message.charAt(charIndex);
+      charIndex++;
+      setTimeout(typeWriter, 50); // Tốc độ gõ: 50ms/ký tự
+    } else {
+      // Gõ xong -> ẩn bức thư và bắt đầu animation trái tim
+      setTimeout(() => {
+        document.getElementById('letterContainer').classList.add('fade-out');
+        
+        setTimeout(() => {
+          document.getElementById('letterContainer').style.display = 'none';
+          document.getElementById('heartText').style.display = 'block';
+          
+          // Bắt đầu animation trái tim
+          startHeartAnimation();
+        }, 1000);
+      }, 2000); // Đợi 2s sau khi gõ xong
+    }
+  }
+  
+  // Bắt đầu gõ sau khi bức thư mở (2.8s)
+  setTimeout(typeWriter, 2800);
+  
+  // Tạo text cho trái tim (nhưng chưa hiện)
+  const textContent = document.getElementById('textContent');
+  const heartMessage = `Chúc ${userName} 20-10 vui vẻ`;
+  const words = heartMessage.split(' ');
+  
+  // Dòng 1: Chúc [Tên]
+  const line1 = words.slice(0, 2).join(' ');
+  line1.split('').forEach(char => {
+    if (char === ' ') {
+      textContent.innerHTML += '<span class="space"> </span>';
+    } else {
+      textContent.innerHTML += `<span class="char">${char}</span>`;
+    }
+  });
+  textContent.innerHTML += '<br>';
+  
+  // Dòng 2: 20-10
+  const line2 = words[2] || '20-10';
+  line2.split('').forEach(char => {
+    textContent.innerHTML += `<span class="char">${char}</span>`;
+  });
+  textContent.innerHTML += '<br>';
+  
+  // Dòng 3: vui vẻ
+  const line3 = words.slice(3).join(' ') || 'vui vẻ';
+  line3.split('').forEach(char => {
+    if (char === ' ') {
+      textContent.innerHTML += '<span class="space"> </span>';
+    } else {
+      textContent.innerHTML += `<span class="char">${char}</span>`;
+    }
+  });
+</script>
+
+<script src="./script.js"></script>
+
+</body>
+</html>
